@@ -1,6 +1,6 @@
 ## 代码注释率统计
 
-英文版请参考[README.en.md](https://github.com/phillyx/jscrs/master/README.en.md)
+英文版请参考[README.en.md](https://github.com/phillyx/jscrs/blob/master/README.en.md)
 
 主要用于前端代码注释率统计，同样也支持其他开发语言
 
