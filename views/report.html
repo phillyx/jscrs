@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>注释率统计报告</title>
+  <style>
+    body,
+    button,
+    dd,
+    dl,
+    dt,
+    fieldset,
+    form,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    hr,
+    input,
+    legend,
+    li,
+    ol,
+    p,
+    td,
+    textarea,
+    th,
+    ul {
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      background: #F1F1F1;
+      color: #333
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 100%;
+      font-weight: 400
+    }
+
+    fieldset,
+    img {
+      border: 0
+    }
+
+    li,
+    ol,
+    ul {
+      list-style: none
+    }
+
+    address,
+    caption,
+    cite,
+    code,
+    dfn,
+    em,
+    strong,
+    th,
+    b,
+    var {
+      font-weight: 400;
+      font-style: normal
+    }
+
+    a,
+    button,
+    input,
+    select,
+    textarea {
+      font-size: 100%;
+      outline: 0
+    }
+
+    textarea {
+      resize: none
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0
+    }
+
+    a {
+      text-decoration: none;
+      cursor: pointer
+    }
+
+    .clearfix::after {
+      content: "";
+      display: block;
+      height: 0;
+      clear: both;
+    }
+
+    .clearfix {
+      zoom: 1
+    }
+
+    i,
+    em {
+      font-style: normal
+    }
+
+    body,
+    button,
+    input,
+    select,
+    textarea {
+      font: 12px/1.5 Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, "SimSun", Arial, sans-serif;
+    }
+
+    body {
+      background-color: #FFF;
+    }
+
+    .main-container {
+      width: 1200px;
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+
+    table {
+      width: 100%;
+      border: none;
+      margin-bottom: -1px;
+      padding: 0 20px
+    }
+
+    table tr {
+      border-bottom: 1px solid #eef0f8
+    }
+
+    table tr:hover td {
+      background-color: #f5fbff
+    }
+
+    table th {
+      background-color: #f6f7fb;
+      line-height: 42px;
+      text-align: left;
+      font-size: 12px;
+      color: #1c2438;
+      position: relative;
+      padding-left: 10px
+    }
+
+    table th:before {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 42px;
+      left: 0;
+      top: 0;
+      background: #fff
+    }
+
+    table th:first-of-type {
+      padding-left: 20px
+    }
+
+    table th:first-of-type:before {
+      content: "";
+      background: none
+    }
+
+    table td {
+      height: 42px;
+      background-color: #fff;
+      text-align: left;
+      color: #1c2438;
+      word-break: break-all;
+      padding: 0 10px
+    }
+
+    table td:first-of-type {
+      padding-left: 20px
+    }
+
+    table td a {
+      color: #3592e2;
+      display: inline-block
+    }
+
+    strong {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="main-container">
+    <table>
+      <thead>
+        <tr>
+          <th>index</th>
+          <th>extname</th>
+          <th>filePath</th>
+          <th>length</th>
+          <th>commentLength</th>
+          <th>commentRate</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{template}}
+      </tbody>
+    </table>
+    <section>
+      <p style="color:#3592E2;padding-top:20px">
+        建议注释率在<strong>20%~30%</strong>之间，低于<strong>5%</strong>警告，高于<strong>50%</strong>警告，整体注释率低于<strong>20%</strong>需要整改
+      </p>
+    </section>
+  </section>
+
+</body>
+
+</html>
