@@ -1,6 +1,6 @@
-## Code comment rate statistics
+## 代码注释率统计
 
-Mainly used for front-end code comment rate statistics, and also supports other development languages
+主要用于前端代码注释率统计，同样也支持其他开发语言
 
 ### Installation
 
@@ -21,25 +21,24 @@ $ jscrs
 ```
 ## options
 
-Custom configuration is not recommended
+不建议使用自定义配置
 
 ### config
 
-Configuration file, the file must be in `json` format. The configuration file supports the same options as `cli options`
+配置文件，该文件必须是`json`格式。配置文件支持的选项与`cli options`相同
 
 - Cli options： `--config`, `-c`
 - Type: **path**
 - Default: **null**
 
-For example, custom configuration file
-
+比如自定义配置文件
 ```bash
 $ jscrs -c /config/jscrs/config.json
 ```
 
 ### Ignore case
 
-Whether to enable the ability of ignoring related files and directories in the `.gitignore` file
+是否启用忽略`.gitignore`文件内相关文件和目录的功能
 
 - Cli options: `--gitignore`, `--g`,
 - Type: **boolean**
@@ -47,17 +46,16 @@ Whether to enable the ability of ignoring related files and directories in the `
 
 ### Output
 
-Output path for generating `html` and` json` reports
-
+  生成`html`和`json`报告的输出路径
  - Cli options: `--output`, `-o`
  - Type: **path**
  - Default: **./report/** 
 
 ## config file
 
-strongly recommended
+强烈建议
 
-Please create a new `.cr.config.json` file in the root directory of the project and write custom configuration
+请在项目根目录下新建`.cr.config.json`文件，并写入自定义内容
 
 ```json
 {
@@ -68,7 +66,7 @@ Please create a new `.cr.config.json` file in the root directory of the project 
     "jsx",
     "vue",
     "html",
-    "md" // bingo, md file is recognized as comment
+    "md" // md文档算作注释
   ],
   "path": [
     "/src"
@@ -86,7 +84,7 @@ Please create a new `.cr.config.json` file in the root directory of the project 
 }
 ```
 
-If the file is not added, and the custom configuration file location is not specified in the `bash` command, the default configuration items are used, and the default items are mainly the following
+如果不添加该文件，且未在`bash`命令中指定自定义文件位置，使用默认配置项，默认项主要为以下内容
 
 ```js
 {
@@ -120,11 +118,11 @@ If the file is not added, and the custom configuration file location is not spec
 
 ## JSCRS Reporters
 
-support `console`, `html`, `json`
+支持`console`, `html`, `json`
 
 ## API 
  
-Provide API for easy integration
+提供API方便集成
 
 ```ts
 import {

@@ -1,7 +1,7 @@
 import { IOptions } from "../interfaces/options.i"
 import * as path from 'path'
 import * as fs from 'fs'
-import { isNull, isNullOrUndefined } from "util"
+import { isNull, isNullOrUndefined } from "./utils"
 import { getRootPath, resolves, getExtensionName } from "./fsHelper"
 import { existsSync } from "fs"
 import { Command } from "commander"

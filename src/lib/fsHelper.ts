@@ -1,14 +1,14 @@
 import * as path from 'path'
 import * as fs from 'fs'
-import { isString } from 'util';
+import { isString } from './utils'
 
 export function isFile(path: string): boolean {
   try {
-    const stat: fs.Stats = fs.lstatSync(path);
-    return stat.isFile();
+    const stat: fs.Stats = fs.lstatSync(path)
+    return stat.isFile()
   } catch (e) {
     // lstatSync throws an error if path doesn't exist
-    return false;
+    return false
   }
 }
 export function getRootPath() {
@@ -25,30 +25,30 @@ export const resolves = (dir: string): string => {
   if (dir.includes(ROOT_PATH)) {
     return dir
   }
-  if (dir.startsWith('.\/')) {
+  if (dir.startsWith('./')) {
     return path.join(ROOT_PATH, '../', dir).replace(/\\/g, '/')
   }
   return path.join(ROOT_PATH, dir).replace(/\\/g, '/')
 }
 
 const getPath = (rootPath: string): string[] => {
-  let fileList: string[] = [];
+  let fileList: string[] = []
 
   const func = (p: string): void => {
     // console.log(p)
-    let files = fs.readdirSync(p);
+    let files = fs.readdirSync(p)
     files.forEach(x => {
-      let xPath = path.join(p, x);
+      let xPath = path.join(p, x)
       // console.log('fPath', xPath)
-      let stat = fs.statSync(xPath);
+      let stat = fs.statSync(xPath)
       if (stat.isDirectory()) {
-        fileList.push(xPath);
-        func(xPath);
+        fileList.push(xPath)
+        func(xPath)
         // } else if (stat.isFile()) {
         // 检查文件类型是否存在于配置项内
         // if (conf.ext.includes(path.extname(x)))
       }
-    });
+    })
   }
   func(resolves(rootPath))
   return fileList
@@ -56,11 +56,11 @@ const getPath = (rootPath: string): string[] => {
 
 export const getAllPaths = (pathList: Array<string> | string): Array<string> => {
   if (isString(pathList)) {
-    pathList = [pathList]
+    pathList = [pathList as string]
   }
   let arr: string[] = []
 
-  pathList.forEach(x => {
+  ;(pathList as string[]).forEach(x => {
     arr.push(...getPath(x))
   })
   return arr

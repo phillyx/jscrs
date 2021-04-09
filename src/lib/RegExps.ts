@@ -1,4 +1,4 @@
-import { isUndefined } from "util"
+import { isUndefined } from "./utils"
 import { HTMLLIKE_EXTS } from "./formats"
 
 export const RegExps = {
@@ -29,7 +29,7 @@ export const getRegex = (regName: string): RegExp => {
   if (isUndefined(r)) {
     r = /^.*$/
   }
-  return r
+  return r as RegExp
 }
 
 export const get_HTMLLIKE_Regex = (extensionName: string): RegExp[] => {

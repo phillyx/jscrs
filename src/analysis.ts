@@ -1,16 +1,16 @@
-import { prepareOptions, filterFilesByExtensionNameInOptions } from "./lib/options";
-import { getRegExpsByExtensionName, RegExps } from "./lib/RegExps";
-import { getExtensionName } from "./lib/fsHelper";
-import * as path from "path";
-import * as fs from "fs";
-import { IOptions } from "./interfaces/options.i";
-import { IAnalysis } from "./interfaces/analysis.i";
-import { IReport } from "./interfaces/report.i";
-import { sync } from 'fast-glob';
-import { isNullOrUndefined } from "util";
-import { registerReporterByName, getRegisteredReporters } from "./reporter";
-import { relative } from "path";
-import { HTMLLIKE_EXTS, CSSLIKE_EXTS } from "./lib/formats";
+import { prepareOptions, filterFilesByExtensionNameInOptions } from './lib/options'
+import { getRegExpsByExtensionName, RegExps } from './lib/RegExps'
+import { getExtensionName } from './lib/fsHelper'
+import * as path from 'path'
+import * as fs from 'fs'
+import { IOptions } from './interfaces/options.i'
+import { IAnalysis } from './interfaces/analysis.i'
+import { IReport } from './interfaces/report.i'
+import { sync } from 'fast-glob'
+import { isNullOrUndefined } from './lib/utils'
+import { registerReporterByName, getRegisteredReporters } from './reporter'
+import { relative } from 'path'
+import { HTMLLIKE_EXTS, CSSLIKE_EXTS } from './lib/formats'
 /**
  * 代码注释率检查入口
  */
@@ -48,7 +48,7 @@ export default class analysis implements IAnalysis {
   }
 
   constructor(options?: IOptions) {
-    this._conf = isNullOrUndefined(options) ? prepareOptions() : options
+    this._conf = isNullOrUndefined(options) ? prepareOptions() : options as IOptions
     this._fileList = this.getFiles()
     this._ext2FileList = this.getExt2FileList()
     this._rateReport = new Map()
@@ -58,20 +58,22 @@ export default class analysis implements IAnalysis {
   private getExt2FileList(): Map<string, string[]> {
     let ext2FileList: Map<string, string[]> = new Map()
     this.conf.ext.forEach(x => {
-      ext2FileList.set(x, this.fileList.filter(y => path.extname(y).substr(1) === x))
+      ext2FileList.set(
+        x,
+        this.fileList.filter(y => path.extname(y).substr(1) === x)
+      )
     })
     return ext2FileList
   }
   private getFiles(): string[] {
     const { path, ignore, ext } = this._conf
-    let fileList = sync(path,
-      {
-        ignore,
-        onlyFiles: true,
-        dot: false,
-        stats: false,
-        absolute: true
-      })
+    let fileList = sync(path, {
+      ignore,
+      onlyFiles: true,
+      dot: false,
+      stats: false,
+      absolute: true,
+    })
     return filterFilesByExtensionNameInOptions(fileList, ext)
   }
   /**
@@ -79,8 +81,7 @@ export default class analysis implements IAnalysis {
    */
   public async statisticCommentRate() {
     try {
-
-      let i = 0;
+      let i = 0
       while (i < this.fileList.length) {
         let filePath = this._fileList[i]
         let rateReport = await this.statisticSingleFileCommentLength(filePath)
@@ -89,11 +90,9 @@ export default class analysis implements IAnalysis {
       }
       this._rateReport.set('sum', this.statisticSumRate())
       return this.rateReport
-
     } catch (error) {
       throw error
     }
-
   }
   /**
    * 统计单个文件的注释长度
@@ -116,21 +115,22 @@ export default class analysis implements IAnalysis {
           let tmpObj = this.statisticHtmlLikeStream(fdata, extname)
           fileLength = tmpObj.fileLength
           singleFileCommentLength = tmpObj.commentLength
-        } else if (extname === 'md') {  // md文档算作注释
+        } else if (extname === 'md') {
+          // md文档算作注释
           singleFileCommentLength = fileLength
         } else {
           const regs: RegExp[] = getRegExpsByExtensionName(extname)
           singleFileCommentLength = this.calculateCommentLength(regs, fdata)
         }
 
-        const commentRate = (singleFileCommentLength / (fileLength === 0 ? 1 : fileLength) * 100).toFixed(1)
+        const commentRate = ((singleFileCommentLength / (fileLength === 0 ? 1 : fileLength)) * 100).toFixed(1)
 
         let logstr: IReport = {
-          'extname': extname,
-          'filePath': (relative(process.cwd(), filePath)),
-          'length': fileLength,
-          'commentLength': singleFileCommentLength,
-          'commentRate': `${commentRate}%`
+          extname: extname,
+          filePath: relative(process.cwd(), filePath),
+          length: fileLength,
+          commentLength: singleFileCommentLength,
+          commentRate: `${commentRate}%`,
         }
         // console.table([
         //   logstr
@@ -138,7 +138,6 @@ export default class analysis implements IAnalysis {
         resolve(logstr)
       })
     })
-
   }
   /**
    * 如果ext配置项内存在 *css，则不过滤
@@ -185,7 +184,7 @@ export default class analysis implements IAnalysis {
 
     // 单独统计style标签内的样式代码注释
     if (this.checkIfCssLikeExtInOptions()) {
-      (str.match(RegExps.style) || []).forEach(x => {
+      ;(str.match(RegExps.style) || []).forEach(x => {
         commentLength += this.calculateCommentLength([RegExps.singleLine, RegExps.multiLine], x)
       })
     }
@@ -201,7 +200,7 @@ export default class analysis implements IAnalysis {
       extname: 'SUM',
       length: sumLength,
       commentLength: sumCommentLength,
-      commentRate: `${(sumCommentLength / sumLength * 100).toFixed(1)}%`
+      commentRate: `${((sumCommentLength / sumLength) * 100).toFixed(1)}%`,
     }
     return sumReport
   }
@@ -218,5 +217,3 @@ export default class analysis implements IAnalysis {
     registerReporterByName(this._conf)
   }
 }
-
-

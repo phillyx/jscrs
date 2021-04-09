@@ -6,5 +6,5 @@ export declare function getRootPath(): string;
  * @returns 返回绝对路径
  */
 export declare const resolves: (dir: string) => string;
-export declare const getAllPaths: (pathList: string | string[]) => string[];
+export declare const getAllPaths: (pathList: Array<string> | string) => Array<string>;
 export declare function getExtensionName(p: string): string;
